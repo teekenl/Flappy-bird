@@ -1,0 +1,19 @@
+{
+  "name": "flappy-bird",
+  "version": "1.0.0",
+  "description": "This is a flappy bird using pure JS and canvas",
+  "main": "flappy_bird.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darknight19910/Flappy-bird.git"
+  },
+  "author": "Ken Lau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darknight19910/Flappy-bird/issues"
+  },
+  "homepage": "https://github.com/darknight19910/Flappy-bird#readme"
+}
