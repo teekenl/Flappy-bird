@@ -3,11 +3,11 @@ window.onload = function(){
     const c = document.getElementById('canvas'),
         ctx = c.getContext("2d");
     c.width = window.innerWidth;
-    c.height = 400;
+    c.height = 900;
 
     // Setup environment, bird and pipe for the game.
     const environment = new Environment(c,ctx);
-    const bird = new Bird(50, 100, c, ctx);
+    const bird = new Bird(80, 350, c, ctx);
     const pipes = [];
     setInterval(function(){
         let pipeSet = generateRandomPipe(ctx, c.width, c.height);
@@ -20,9 +20,6 @@ window.onload = function(){
 
     ctx.fillStyle= "#FFFFFF";
     function gamePlay(){
-        if(bird.game_status()){
-
-        }
         ctx.fillRect(0,0,c.width,c.height);
         environment.update();
         environment.render(ctx);
@@ -38,20 +35,21 @@ window.onload = function(){
 };
 
 function generateRandomPipe(ctx, canvasWidth, canvasHeight){
-    let lengthTop = Math.round(Math.random()*200+100);
-    let lengthBottom = 600 - 200 - lengthTop;
+    let lengthTop = Math.round(Math.random()*400+100);
+    let lengthBottom = 600 - 80 - lengthTop;
     let returnVal = { };
     returnVal.top= new Pipe(canvasWidth, -5, lengthTop, 3, ctx);
-    returnVal.bottom= new Pipe(canvasWidth, canvasHeight-5-lengthBottom, lengthBottom, 3, ctx);
+    returnVal.bottom= new Pipe(canvasWidth, canvasHeight-210-lengthBottom, lengthBottom, 3, ctx);
     return returnVal;
 }
 
 function detectCollision(bird,pipes){
     let collisionDetected = false;
     pipes.forEach(function(e) {
-        let highPipe = e.ypos <= 0;
+        let highPipe = e.ypos <= 0; 
         let x0 = e.xpos, x1 = e.xpos+e.width;
         if(highPipe){
+            console.log("asd");
             let y0 = e.ypos + e.length;
             let a = bird.x;
             let b = bird.y - bird.height -2;

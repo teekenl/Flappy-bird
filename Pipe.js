@@ -13,9 +13,9 @@ Pipe.prototype.update = function(){
 Pipe.prototype.render = function(){
   //this.ctx.save();
   this.ctx.fillStyle = "#000000";
-  this.ctx.fillRect(this.xpos+5, this.ypos+5, 150, this.length);
+  this.ctx.fillRect(this.xpos, this.ypos+5, 155, this.length);  // (x, y, grid_x, grid_y)
   this.ctx.fillStyle = "#74BF2E";
-  this.ctx.fillRect(this.xpos+5, this.ypos+5, 140, this.length-10);
+  this.ctx.fillRect(this.xpos+5, this.ypos+9, 140, this.length-10);
   this.ctx.fillStyle = "#FFFFFF";
   //this.ctx.restore();
 };

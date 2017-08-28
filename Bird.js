@@ -17,9 +17,9 @@ const Bird = function(x, y, c, ctx) {
     window.addEventListener('keydown', function(e){
         if(e.keyCode === 32) {
             if(self.y>0){
-                self.moveY = -16;
+                self.moveY = -9;
+                e.preventDefault();
             }
-            console.log("Spacebar");
         }
     });
 };
@@ -30,8 +30,9 @@ Bird.prototype.update = function(){
         if (this.ticks % 15 === 0) this.spriteIndex = (this.spriteIndex+1) % this.sprites.length;
         this.y += this.moveY;
         if(this.y > this.c.height){
-            alert('Game over');
+            //alert('Game over');
             this.game_over = true;
+            this.y = -100;
         }
         this.moveY += 0.5;
     }

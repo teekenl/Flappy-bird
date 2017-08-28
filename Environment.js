@@ -18,6 +18,6 @@ Environment.prototype.update = function(){
 
 Environment.prototype.render = function(ctx){
     for (let i=0; i<=this.c.width/this.bgWidth; i++){
-        ctx.drawImage(this.bgImg, this.bgPos+i*this.bgWidth, 0);
+        this.ctx.drawImage(this.bgImg, this.bgPos+i*this.bgWidth, 0);
     }
 };
