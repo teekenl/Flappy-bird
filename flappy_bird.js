@@ -1,25 +1,35 @@
 
 window.onload = function(){
     const c = document.getElementById('canvas'),
-        ctx = c.getContext("2d");
+        ctx = c.getContext("2d"),
+        refresh = document.getElementById('refresh');
     c.width = window.innerWidth;
     c.height = 900;
 
     // Setup environment, bird and pipe for the game.
-    const environment = new Environment(c,ctx);
-    const bird = new Bird(80, 350, c, ctx);
-    const pipes = [];
+    let environment = new Environment(c,ctx);
+    let bird = new Bird(80, 350, c, ctx);
+    let pipes = [];
     setInterval(function(){
         let pipeSet = generateRandomPipe(ctx, c.width, c.height);
         pipes.push(pipeSet.top, pipeSet.bottom);
-        console.log(pipeSet);
     },3000);
 
+    refresh.addEventListener("click",resetGame);
     //start game
     gamePlay();
 
+    function resetGame() {
+        pipes = [];
+        environment = new Environment(c,ctx);
+        bird = new Bird(80,350, c, ctx);
+        gamePlay();
+    }
+
     ctx.fillStyle= "#FFFFFF";
     function gamePlay(){
+        refresh.style.visibility = refresh.style.visibility = "visible" ?  "hidden": "hidden";
+
         ctx.fillRect(0,0,c.width,c.height);
         environment.update();
         environment.render(ctx);
@@ -27,11 +37,28 @@ window.onload = function(){
             pipe.update();
             pipe.render();
         });
+        if(bird.game_status()) {
+            alert("Game over");
+            refresh.style.visibility = "visible";
+            return;
+        }
         bird.update();
+
         bird.render();
-        if(detectCollision(bird,pipes)) alert("You lose");
+        if(detectCollision(bird,pipes)){
+            alert("You lose");
+            refresh.style.visibility = "visible";
+            return;
+        }
+
         window.requestAnimationFrame(gamePlay);
     }
+
+    window.addEventListener('keydown', function(e){
+        if(e.keyCode === 13 && refresh.style.visibility==="visible") {
+            resetGame();
+        }
+    });
 };
 
 function generateRandomPipe(ctx, canvasWidth, canvasHeight){
@@ -45,22 +72,22 @@ function generateRandomPipe(ctx, canvasWidth, canvasHeight){
 
 function detectCollision(bird,pipes){
     let collisionDetected = false;
+
     pipes.forEach(function(e) {
-        let highPipe = e.ypos <= 0; 
+        let highPipe = e.ypos <= 0;
         let x0 = e.xpos, x1 = e.xpos+e.width;
         if(highPipe){
-            console.log("asd");
             let y0 = e.ypos + e.length;
             let a = bird.x;
             let b = bird.y - bird.height -2;
-            if(a > x0 && a < x1 && b < y0) {
-                return true;
+            if(a >= x0 && a <= x1 && b <= y0) {
+                collisionDetected = true
             }
         } else{
             let y2 = e.ypos;
             let a = bird.x;
             let b = bird.y +  bird.height/2;
-            if(a>x0 && a<x1 && b > y2) return true;
+            if(a>= x0 && a<= x1 && b >= y2) collisionDetected = true;
         }
     });
     return collisionDetected;

@@ -17,7 +17,7 @@ const Bird = function(x, y, c, ctx) {
     window.addEventListener('keydown', function(e){
         if(e.keyCode === 32) {
             if(self.y>0){
-                self.moveY = -9;
+                self.moveY = -8;
                 e.preventDefault();
             }
         }
@@ -29,8 +29,9 @@ Bird.prototype.update = function(){
         this.ticks++;
         if (this.ticks % 15 === 0) this.spriteIndex = (this.spriteIndex+1) % this.sprites.length;
         this.y += this.moveY;
+        if((this.y-30)<=0) {
+        }
         if(this.y > this.c.height){
-            //alert('Game over');
             this.game_over = true;
             this.y = -100;
         }
@@ -42,11 +43,16 @@ Bird.prototype.render = function(){
     let renderX = this.x - this.width/2 - 10;
     let renderY = this.y - this.height/2 - 10;
     this.ctx.drawImage(this.sprites[this.spriteIndex],renderX,renderY);
+
 };
 
 Bird.prototype.game_status = function(){
-    return !this.game_over;
+    return this.game_over;
 };
+
+Bird.prototype.reset_game = function(){
+    this.game_over = false;
+}
 
 Bird.prototype.reset = function(){
     this.game_over = false;

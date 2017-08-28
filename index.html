@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <title>Flappy bird</title>
     <style>
         body{
@@ -17,9 +18,24 @@
             width: 100%;
             height: 900px;
         }
+
+        .fa{
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            color:white;
+            z-index: 10000;
+            cursor:pointer;
+        }
+
+        .fa:hover{
+            color:black;
+        }
+
     </style>
 </head>
 <body>
+    <i class="fa fa-refresh fa-5x" id="refresh" aria-hidden="true" ></i>
     <canvas id="canvas"></canvas>
     <img src="images/bird1.png" id="bird1"/>
     <img src="images/bird1.png" id="bird2"/>
